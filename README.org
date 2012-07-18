@@ -32,3 +32,7 @@ Each frame accepts the following options:
     internally.  Feel free to ignore it.
   - *url:*     The url to load into the frame.
   - *refresh:* An optional refresh interval in seconds.
+
+** Example:
+
+See the index.html file, or go to [[http://tobytripp.github.com/dashboard][the project page]].
