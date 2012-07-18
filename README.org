@@ -21,14 +21,14 @@ The dashboard is set up via options to the plugin function:
 
 The options consist of:
 
-  - frames:  a list of frames
-  - columns: the number of columns to display
-  - rows:    the number of rows to display
+  - *frames:*  a list of frames
+  - *columns:* the number of columns to display
+  - *rows:*    the number of rows to display
 
 
 Each frame accepts the following options:
 
-  - name:    A name for the Frame.  Currently this is only used
+  - *name:*    A name for the Frame.  Currently this is only used
     internally.  Feel free to ignore it.
-  - url:     The url to load into the frame.
-  - refresh: An optional refresh interval in seconds.
+  - *url:*     The url to load into the frame.
+  - *refresh:* An optional refresh interval in seconds.
