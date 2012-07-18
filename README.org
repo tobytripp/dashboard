@@ -1,0 +1,36 @@
+* Javascript Web Dashboard
+
+Just a simple bit of javascript that uses jQuery to generate a set of
+iframes.
+
+** Configuring the Dashboard
+
+The dashboard is set up via options to the plugin function:
+
+#+begin_src javascript
+  $("div#main").dashboard({
+    frames: [
+      { name: "Frame One",
+        url:  "frame-one.com" },
+      { name: "Auto-Refreshed",
+        url:  "refresh-me.com",
+        refresh: 60 /* seconds */ }
+    ],
+    columns: 2,
+    rows:    1
+  });
+#+end_src
+
+The options consist of:
+
+  - frames:  a list of frames
+  - columns: the number of columns to display
+  - rows:    the number of rows to display
+
+
+Each frame accepts the following options:
+
+  - name:    A name for the Frame.  Currently this is only used
+    internally.  Feel free to ignore it.
+  - url:     The url to load into the frame.
+  - refresh: An optional refresh interval in seconds.
