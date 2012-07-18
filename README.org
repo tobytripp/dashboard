@@ -7,19 +7,17 @@ iframes.
 
 The dashboard is set up via options to the plugin function:
 
-#+begin_src javascript
-  $("div#main").dashboard({
-    frames: [
-      { name: "Frame One",
-        url:  "frame-one.com" },
-      { name: "Auto-Refreshed",
-        url:  "refresh-me.com",
-        refresh: 60 /* seconds */ }
-    ],
-    columns: 2,
-    rows:    1
-  });
-#+end_src
+:  $("div#main").dashboard({
+:    frames: [
+:      { name: "Frame One",
+:        url:  "frame-one.com" },
+:      { name: "Auto-Refreshed",
+:        url:  "refresh-me.com",
+:        refresh: 60 /* seconds */ }
+:    ],
+:    columns: 2,
+:    rows:    1
+:  });
 
 The options consist of:
 
