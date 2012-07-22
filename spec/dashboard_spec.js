@@ -1,4 +1,3 @@
-
 describe( "Dashboard", function() {
   var dashboard;
   var frame;
@@ -7,14 +6,13 @@ describe( "Dashboard", function() {
     frame = jasmine.createSpyObj( "Frame", ["resize"]);
     spyOn( window, "Frame" ).andReturn( frame );
 
-    dashboard = new Dashboard( new Object(), {
-      frames: [{ url: "www.example.com" }],
-      columns: 4,
-      rows:    3
-    });
+    jasmine.getFixtures().fixturesPath = 'spec/fixtures';
+    loadFixtures( 'dashboard-ul.html' );
+
+    $("ul#dashboard").dashboard({ columns: 4, rows: 3 });
   });
 
-  it( "creates a Frame object for each config provided in the options", function() {
+  it( "creates a Frame object for each element in the receiving container", function() {
     expect( window.Frame ).toHaveBeenCalled();
   });
 
@@ -28,5 +26,5 @@ describe( "Dashboard", function() {
 });
 
 // Local Variables:
-// compile-command: "open file:///Users/toby/Code/Javascript/dashboard/spec_runner.html"
+// compile-command: "open file:///Users/toby/Code/Javascript/dashboard/spec_runner.html && open -a Emacs"
 // End:

@@ -102,11 +102,26 @@ td { vertical-align: top; }
   h2, h3 { page-break-after: avoid; }
 }
 
-iframe {
+li {
    float: left;
-   margin:  0;
-   padding: 0;
+   bullet-style: none;
+   margin: 0; padding: 0;
+}
+
+iframe {
    border: none;
 }
 
-div { height: 100%; width: 100%; }
+div[role=main], ul, iframe, body {
+   height: 100%;
+   width:  100%;
+   margin:   0;
+   padding:  0;
+}
+
+body  {
+   background-color: #211E1E;
+   color: white;
+}
+
+footer { clear: both; }

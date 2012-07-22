@@ -17,14 +17,44 @@
 <body>
   <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
   <header>
-
   </header>
+
   <div role="main">
+    <ul>
+      <li><a href="http://www.transitchicago.com/mobile/traintrackerarrivals.aspx?sid=40040">Quincy</a></li>
+      <li><a href="http://www.transitchicago.com/mobile/traintrackerarrivals.aspx?sid=41460">Irving Park</a></li>
+      <li><a href="http://image.weather.com/images/maps/current/cur_cen_720x486.jpg">Weather</a></li>
+      <li data-colspan=2><a href="https://backstop.pagerduty.com">PagerDuty</a></li>
+      <li data-colspan=3><a href="http://www.ctabustracker.com/bustime/eta/eta.jsp">Bus</a></li>
+      <li data-colspan=2><a href="https://rpm.newrelic.com/accounts/7640/applications/134572/enduser/overview">NewRelic</a></li>
+    </ul>
   </div>
+
   <footer>
+    <form>
+      <label>
+        Columns:
+        <select name=columns>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3" selected>3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+        </select>
+      </label>
+      <label>
+        Rows:
+        <select name=rows>
+          <option value="1">1</option>
+          <option value="2" selected>2</option>
+          <option value="3">3</option>
+        </select>
+      </label>
 
+      <input type=submit value=Update></input>
+    </form>
   </footer>
-
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
   <script>
@@ -35,44 +65,23 @@
   <script src="js/dashboard.js"></script>
 
   <script>
-    $("[role='main']").dashboard({
-      frames: [{
-        name: "Quincy",
-        url:"http://www.transitchicago.com/mobile/traintrackerarrivals.aspx?sid=40040",
-        refresh: 45 // seconds
-      },
-      {
-        name: "Irving Park",
-        url:"http://www.transitchicago.com/mobile/traintrackerarrivals.aspx?sid=41460",
-        refresh: 45 // seconds
-      },
-      {
-      name: "Weather",
-      url:
-      "http://image.weather.com/images/maps/current/cur_cen_720x486.jpg",
-      refresh: 300,
-      colspan: 2
-      },
-      {
-      name: "PagerDuty",
-      url: "https://backstop.pagerduty.com",
-      colspan: 2,
-      refresh: 300
-      },
-      {
-      name: "Bus",
-      url: "http://www.ctabustracker.com/bustime/eta/eta.jsp",
-      colspan: 3
-      },
-      {
-      name: "New Relic",
-      url:"https://rpm.newrelic.com/accounts/7640/applications/134572/enduser/overview",
-      colspan: 3
-      }],
-      columns: 6,
+    $("[role='main'] ul").dashboard({
+      columns: 3,
       rows:    2
-      }
-);
+      });
+
+    $("form").submit( function( e ) {
+      var content = $(this).serializeArray();
+      console.log( content );
+      e.preventDefault();
+
+      var options = {};
+      $.each( content, function( i, pair ) {
+        options[pair.name] = pair.value;
+      });
+
+      $("[role='main'] ul").dashboard( options );
+    });
   </script>
 </body>
 </html>
