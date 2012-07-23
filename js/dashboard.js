@@ -49,8 +49,9 @@
     this.$container.append( iframe );
 
     iframe.attr( "name", this.name );
-
     this.$element = iframe;
+
+    if( this.refreshInterval ) this.startAutoRefresh();
 
     this.refresh();
   }
@@ -60,18 +61,40 @@
     this.url     = anchor.attr( "href" );
     this.name    = anchor.text();
     this.colspan = container.data( "colspan" ) || 1;
+    this.refreshInterval = container.data( "refresh" );
   }
 
   Frame.prototype.refresh = function() {
+    console.log( "Refreshing frame ", this.name, this.intervalId, this.url );
     this.$element.attr( "src", this.url );
+  }
+
+  Frame.prototype.startAutoRefresh = function() {
+    var randOffset = Math.random() * 2;
+    if( this.intervalId ) this.stopRefresh();
+
+    var intervalSeconds = this.refreshInterval + randOffset;
+    console.log( "interval (sec) ", intervalSeconds );
+
+    this.intervalId = setInterval(
+      this.refresh.bind( this ),
+      intervalSeconds * MS_PER_S
+    );
+
+    console.log( "started interval ", this.intervalId );
+  }
+
+  Frame.prototype.stopRefresh = function() {
+    console.log( "stop interval ", this.intervalId );
+    clearInterval( this.intervalId );
   }
 
   Frame.prototype.resize = function( columns, rows ) {
     var columnPercentage = (100.0 / columns);
     var width = columnPercentage * this.colspan;
 
-    this.$container.css( "width",  width + "%" );
-    this.$container.css( "height", (100 / rows) + "%" );
+    this.$container.css( "width",  String( width ) + "%" );
+    this.$container.css( "height", String(100 / rows) + "%" );
   }
 
   $.fn.dashboard = function( options ) {

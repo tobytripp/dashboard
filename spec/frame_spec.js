@@ -52,11 +52,11 @@ describe( "Frame", function() {
     });
 
     it( "sets the iframe height according to the row count specified", function() {
-      expect( iframe ).toHaveAttr( "height", "50%" );
+      expect( container.css( "height" ) ).toMatch( /^50/ )
     });
 
     it( "sets the iframe width according to the column value", function() {
-      expect( iframe ).toHaveAttr( "width", "33%" );
+      expect( container.css( "width" ) ).toMatch( /^33/ )
     });
 
     describe( "when the container has a colspan attribute set", function() {
@@ -66,14 +66,40 @@ describe( "Frame", function() {
       });
 
       it( "sets the iframe width according to the span value", function() {
-        expect( iframe ).toHaveAttr( "width", "66%" );
+        expect( container.css( "width" ) ).toMatch( /^66/ )
       });
     });
   });
 
-  describe( "when there is a refresh attribute set", function() {
-    it( "sets an interval" );
-    it( "resets the iframe src when the interval expires" );
+  describe( "when a data-refresh attribute is set", function() {
+    beforeEach( function() {
+      container.data( "refresh", 1 );
+
+      frame  = new Frame( container );
+      iframe = container.find( "iframe" );
+    });
+
+    afterEach( function() {
+      frame.stopRefresh();
+    });
+
+    it( "sets the refresh option", function() {
+      expect( frame.refreshInterval ).toEqual( 1 );
+    });
+
+    it( "resets the iframe src when the interval expires", function() {
+      runs( function() {
+        console.log( "set frame url" );
+        frame.url = "updated"
+      });
+
+      waits( 2500 );
+
+      runs( function() {
+        console.log( "assert!" );
+        expect( $(iframe).attr( "src" ) ).toEqual( "updated" );
+      });
+    });
   });
 });
 

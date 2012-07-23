@@ -3,7 +3,7 @@ describe( "Dashboard", function() {
   var frame;
 
   beforeEach( function() {
-    frame = jasmine.createSpyObj( "Frame", ["resize"]);
+    frame = jasmine.createSpyObj( "Frame", ["resize", "refresh"]);
     spyOn( window, "Frame" ).andReturn( frame );
 
     jasmine.getFixtures().fixturesPath = 'spec/fixtures';

@@ -21,9 +21,9 @@
 
   <div role="main">
     <ul>
-      <li><a href="http://www.transitchicago.com/mobile/traintrackerarrivals.aspx?sid=40040">Quincy</a></li>
-      <li><a href="http://www.transitchicago.com/mobile/traintrackerarrivals.aspx?sid=41460">Irving Park</a></li>
-      <li><a href="http://image.weather.com/images/maps/current/cur_cen_720x486.jpg">Weather</a></li>
+      <li data-refresh=55><a href="http://www.transitchicago.com/mobile/traintrackerarrivals.aspx?sid=40040">Quincy</a></li>
+      <li data-refresh=55><a href="http://www.transitchicago.com/mobile/traintrackerarrivals.aspx?sid=41460">Irving Park</a></li>
+      <li data-refresh=300><a href="http://image.weather.com/images/maps/current/cur_cen_720x486.jpg">Weather</a></li>
       <li data-colspan=2><a href="https://backstop.pagerduty.com">PagerDuty</a></li>
       <li data-colspan=3><a href="http://www.ctabustracker.com/bustime/eta/eta.jsp">Bus</a></li>
       <li data-colspan=2><a href="https://rpm.newrelic.com/accounts/7640/applications/134572/enduser/overview">NewRelic</a></li>
@@ -65,22 +65,23 @@
   <script src="js/dashboard.js"></script>
 
   <script>
-    $("[role='main'] ul").dashboard({
-      columns: 3,
-      rows:    2
-      });
-
-    $("form").submit( function( e ) {
-      var content = $(this).serializeArray();
-      console.log( content );
-      e.preventDefault();
-
+    function formToOptions( form ) {
       var options = {};
+      var content = $(form).serializeArray();
+
       $.each( content, function( i, pair ) {
         options[pair.name] = pair.value;
       });
 
-      $("[role='main'] ul").dashboard( options );
+      return options;
+    }
+
+    $("[role='main'] ul").dashboard( formToOptions( $("form") ) );
+
+    $("form").submit( function( e ) {
+      e.preventDefault();
+
+      $("[role='main'] ul").dashboard( formToOptions( this ) );
     });
   </script>
 </body>
