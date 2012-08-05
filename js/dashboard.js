@@ -63,7 +63,13 @@
   }
 
   Dashboard.prototype.rotateCells = function() {
-    this.swapCells( 0, this.frameCount - 1 );
+    var swapOut = 0;
+    if( this.lastSwapped !== undefined ) {
+      swapOut = (this.lastSwapped + 1) % this.frameCount;
+    }
+
+    this.swapCells( swapOut, -1 );
+    this.lastSwapped = swapOut;
   }
 
   Dashboard.prototype._startCellRotation = function() {
@@ -74,16 +80,14 @@
   }
 
   Dashboard.prototype.swapCells = function( i, j ) {
-    console.log( "swap: ", i, j );
+    console.log( "swap: ", i, j, "lastSwapped: ", this.lastSwapped );
     var $elem = this.$elem;
 
-    this.$elem.children().each( function() {
-      var ix = $(this).data( 'index' );
-      if( ix == i ) { $(this).data( 'index', j ); }
-      if( ix == j ) { $(this).data( 'index', i ); }
-    }).sort( function( a, b ) {
-      return $(a).data( "index" ) - $(b).data( "index" );
-    }).appendTo( this.$elem );
+    var items    = $elem.children();
+    var mover    = $(items.get( j )).remove();
+    var replaced = $(items.get( i )).replaceWith( mover );
+
+    $elem.append( replaced );
   }
 
 
