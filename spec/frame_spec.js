@@ -75,8 +75,7 @@ describe( "Frame", function() {
     beforeEach( function() {
       container.data( "refresh", 1 );
 
-      frame  = new Frame( container );
-      iframe = container.find( "iframe" );
+      frame.init();
     });
 
     afterEach( function() {
@@ -93,11 +92,11 @@ describe( "Frame", function() {
         frame.url = "updated"
       });
 
-      waits( 2500 );
+      var waitPeriod = (frame.refreshInterval + Frame.maximumRefreshDelay) * 1000;
+      waits( waitPeriod );
 
       runs( function() {
-        console.log( "assert!" );
-        expect( $(iframe).attr( "src" ) ).toEqual( "updated" );
+        expect( $(container).find( "iframe" ).attr( "src" ) ).toEqual( "updated" );
       });
     });
   });

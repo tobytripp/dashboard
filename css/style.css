@@ -102,9 +102,9 @@ td { vertical-align: top; }
   h2, h3 { page-break-after: avoid; }
 }
 
+ul { list-style-type: none; }
 li {
    float: left;
-   bullet-style: none;
    margin: 0; padding: 0;
 }
 
