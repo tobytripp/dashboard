@@ -9,9 +9,15 @@
   <script type="text/javascript" src="lib/jasmine-1.2.0/jasmine-html.js"></script>
   <script type="text/javascript" src="lib/jasmine-jquery.js"></script>
 
+  <!-- This _should_ allow the use of text/coffeescript tags... -->
+  <script type="text/javascript" src="lib/coffee-script.js"></script>
+
   <!-- include spec files here... -->
-  <script type="text/javascript" src="spec/dashboard_spec.js"></script>
-  <script type="text/javascript" src="spec/frame_spec.js"></script>
+  <script type="text/javascript"   src="spec/dashboard_spec.js"></script>
+  <script type="text/javascript"   src="spec/frame_spec.js"></script>
+
+  <script type="text/coffeescript" src="spec/cell_spec.coffee"></script>
+  <script type="text/javascript"   src="spec/cell_spec.js"></script>
 
   <!-- include source files here... -->
   <script type="text/javascript" src="js/libs/jquery-1.7.1.js"></script>
@@ -45,7 +51,5 @@
     })();
   </script>
 </head>
-
-<body>
-</body>
+<body></body>
 </html>
