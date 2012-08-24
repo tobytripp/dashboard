@@ -3,7 +3,7 @@ describe( "Dashboard", function() {
   var frame;
 
   beforeEach( function() {
-    spyOn( window, "Frame" ).andCallFake( function() {
+    spyOn( Dashboard, "Frame" ).andCallFake( function() {
       frame = jasmine.createSpyObj( "Frame", ["resize", "refresh"]);
       frame.name = "Stub Frame " + new Date().getTime() + Math.random();
       frame.colspan = 1;
@@ -21,7 +21,7 @@ describe( "Dashboard", function() {
   });
 
   it( "creates a Frame object for each element in the receiving container", function() {
-    expect( window.Frame ).toHaveBeenCalled();
+    expect( Dashboard.Frame ).toHaveBeenCalled();
   });
 
   it( "orders the frame to size itself", function() {
@@ -32,38 +32,17 @@ describe( "Dashboard", function() {
     expect( frame.resize ).toHaveBeenCalledWith( 4, 3 );
   });
 
-  describe( "#swapCells", function() {
-    it( "exchanges the two given cell indices", function() {
-      dashboard.swapCells( 0, 2 );
-      expect( $("ul#dashboard li:first-child").attr( "id" ) ).toEqual( '3' );
-    });
-  });
-
   describe( "when there are more frame entries than spaces in the grid", function() {
     beforeEach( function() {
       Dashboard.cycleDelayMs = 10;
       $("ul#dashboard").dashboard({ columns: 2, rows: 1 });
+      jQuery.fx.off = true
     });
 
     afterEach( function() {
       clearInterval( dashboard.intervalId );
     });
 
-
-    it( "resorts the entries after a delay", function() {
-      runs( function() {
-        expect(
-          $("ul#dashboard li:first-child a").attr( "href" )
-        ).toEqual( "http://example1.com" );
-      });
-
-      waits( Dashboard.cycleDelayMs );
-
-      runs( function() {
-        expect(
-          $("ul#dashboard li:first-child a").attr( "href" )
-        ).toEqual( "http://example3.com" );
-      });
-    });
+    it( "orders all cells to flip after a delay", function() {});
   });
 });

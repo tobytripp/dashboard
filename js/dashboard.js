@@ -1,6 +1,7 @@
 ;(function($) {
   var MS_PER_S = 1000;
 
+
   Function.prototype.bind = function( context ) {
     return $.proxy( this, context );
   }
@@ -30,6 +31,7 @@
         data( "index", i ).
         data( "updated", new Date() );
   }
+
 
   Dashboard.prototype.resizeFrames = function() {
     var self = this;

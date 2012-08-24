@@ -1,9 +1,8 @@
-guard 'coffeescript', output: 'src/javascripts' do
-  watch %r<^src/coffeescripts/(.*)\.coffee>
-end
-
 guard 'coffeescript', output: 'spec' do
   watch %r<^spec/(.*)\.coffee>
+end
+guard 'coffeescript', output: 'src/javascripts' do
+  watch %r<^src/coffeescripts/(.*)\.coffee>
 end
 
 guard 'livereload' do
@@ -13,9 +12,10 @@ end
 
 guard 'sprockets',
   destination: "build",
-  minify:      true,
-  asset_paths: ['src/javascripts'] do
-  watch( %r{^src/javascripts/.+\.js$} ) { |m| "js/dashboard.js" }
+  minify:      false,
+  asset_paths: ['src/coffeescripts', 'js/libs'] do
+  watch %r<^src/coffeescripts/.+\.js\.coffee>
+#  watch 'src/coffeescripts/dashboard.js.coffee'
 end
 
 guard 'bundler' do

@@ -20,14 +20,25 @@
   </header>
 
   <div role="main">
-    <ul>
-      <li id=1 data-refresh=55><a href="frames/1.html">Quincy</a></li>
-      <li id=2 data-refresh=55><a href="frames/2.html">Irving Park</a></li>
+   <ul>
+      <li id=1 data-refresh=55> <a href="frames/1.html">Quincy</a></li>
+      <li id=2 data-refresh=55> <a href="frames/2.html">Irving Park</a></li>
       <li id=3 data-refresh=300><a href="frames/3.html">Weather</a></li>
-      <li id=4 data-colspan=2><a href="frames/4.html">PagerDuty</a></li>
-      <li id=5 data-colspan=3><a href="frames/5.html">Bus</a></li>
-      <li id=6 data-colspan=2><a href="frames/6.html">NewRelic</a></li>
+      <li id=4 data-colspan=2>  <a href="frames/4.html">PagerDuty</a></li>
+      <li id=5 data-colspan=3>  <a href="frames/5.html">Bus</a></li>
+      <li id=6 data-colspan=2>  <a href="frames/6.html">NewRelic</a></li>
     </ul>
+  </div>
+
+
+  <div id="flip-test" class="container">
+    <div class="front face">
+      <p> Front </p>
+    </div>
+
+    <div class="back face">
+      <p> Back </p>
+    </div>
   </div>
 
   <footer>
@@ -56,12 +67,14 @@
     </form>
   </footer>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js">
+  </script>
   <script>
     window.jQuery ||
     document.write('<script src="js/libs/jquery-1.7.1.min.js"><\/script>')
   </script>
 
+  <script src="js/libs/jquery.transit.js"></script>
   <script src="js/dashboard.js"></script>
 
   <script>

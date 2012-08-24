@@ -1,8 +1,5 @@
 source 'https://rubygems.org'
 
-gem 'sass'
-gem 'sprockets'
-
 gem 'uglifier'
 
 gem 'guard'
@@ -14,5 +11,5 @@ gem 'guard-livereload'
 gem 'guard-sprockets'
 gem 'guard-bundler'
 
-gem 'jasmine'
-gem 'sprockets'
+gem 'jasmine',   '~> 1.2.0'
+gem 'sprockets', '~> 2.4.5'
