@@ -1,4 +1,5 @@
-class Dashboard extends Backbone.Collection
+$ = undefined
+class window.Dashboard extends Backbone.Collection
   defaults:
     columns: 3,
     rows:    2

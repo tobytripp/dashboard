@@ -2,8 +2,12 @@ window.Dashboard ?= {}
 $ = undefined
 
 class Dashboard.Frame extends Backbone.Model
+  @BACK:  0
+  @FRONT: 1
+
   defaults:
     refresh_rate: undefined
+    face:         Frame.BACK
 
   initialize: () ->
     refresh_after = @get "refresh_after"
@@ -20,3 +24,12 @@ class Dashboard.Frame extends Backbone.Model
 
   refresh: () ->
     @trigger "change"
+
+  front: ->
+    @get('face') == Frame.FRONT
+
+  flip: ->
+    face = @get 'face'
+    face = (face + 1) % 2
+    @set 'face', face
+    @

@@ -1,26 +1,27 @@
 describe "Cell", ->
   cell          = undefined
-  front_element = undefined
-  back_element  = undefined
 
   beforeEach ->
-    spyOn( Dashboard, "Frame" ).andCallFake ->
-      frame = jasmine.createSpyObj( "Frame", ["resize", "refresh"] )
-      frame.name = "Stub Frame " + new Date().getTime() + Math.random()
-      frame.colspan = 1
-
-      console.log frame.name
-
-      frame
     cell = new Dashboard.Cell
 
   it "should be a collection of Frame models", ->
     cell.add new Dashboard.Frame()
     expect( cell.length ).toEqual 1
 
-  describe "initialization", ->
-    it "accepts a container element", ->
-      new Dashboard.Cell( front_element )
+  describe "#flip", ->
+    frame1 = undefined
+    frame2 = undefined
 
-    it "accepts an optional second container for its 'back'", ->
-      new Dashboard.Cell( front_element, back_element )
+    beforeEach ->
+      frame1 = new Dashboard.Frame()
+      frame2 = new Dashboard.Frame()
+      cell.add [frame1, frame2]
+
+    it "calls #flip on the first two frames", ->
+      spyOn( frame1, "flip" )
+      spyOn( frame2, "flip" )
+
+      cell.flip()
+
+      expect( frame1.flip ).toHaveBeenCalled()
+      expect( frame2.flip ).toHaveBeenCalled()

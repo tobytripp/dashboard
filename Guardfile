@@ -21,3 +21,9 @@ end
 guard 'bundler' do
   watch 'Gemfile'
 end
+
+guard :shell do
+  watch %r<spec/.+\.js> do |m|
+    `open spec_runner.html`
+  end
+end

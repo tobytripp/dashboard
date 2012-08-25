@@ -1,5 +1,7 @@
 describe "Dashboard.Frame", ->
   frame = undefined
+  beforeEach ->
+    frame = new Dashboard.Frame()
 
   it "accepts a target url", ->
     new Dashboard.Frame( url: "http://localhost" )
@@ -8,9 +10,6 @@ describe "Dashboard.Frame", ->
     new Dashboard.Frame( url: "http://localhost", refresh_after: 0 )
 
   describe "#refresh", ->
-    beforeEach ->
-      frame = new Dashboard.Frame()
-
     it "triggers a change event", ->
       changed = false
       frame.on "change", -> changed = true
@@ -33,3 +32,12 @@ describe "Dashboard.Frame", ->
 
       runs ->
         expect( changed ).toEqual true
+
+  describe "#front", ->
+    it "should be false by default", ->
+      expect( frame.front() ).toBeFalsy()
+
+  describe "#flip", ->
+    it "changes the #front attribute on the frame", ->
+      frame.flip()
+      expect( frame.front() ).toBeTruthy()
