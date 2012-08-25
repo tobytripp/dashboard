@@ -1,3 +1,6 @@
+window.Dashboard ?= {}
+$ = undefined
+
 class Dashboard.Frame extends Backbone.Model
   defaults:
     refresh_rate: undefined

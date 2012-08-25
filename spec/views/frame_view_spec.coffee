@@ -11,13 +11,14 @@ describe "FrameView", ->
 
   describe "#render", ->
     it "sets the iframe's src to the value on the model", ->
-      view.render
+      view.render()
       expect( view.$el.attr( "src" ) ).toEqual frame.get( "url" )
 
   describe "model change", ->
     beforeEach ->
-      view.render
+      view.render()
 
     it "resets the iframe src", ->
       frame.set url: "otherhost"
+      frame.trigger "change"
       expect( view.$el.attr( "src" ) ).toEqual "otherhost"
