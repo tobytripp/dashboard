@@ -1,19 +1,17 @@
-class DashboardView extends Backbone.View
-  el: $ '#dashboard'
-
+class Dashboard.DashboardView extends Backbone.View
   initialize: ->
     _.bindAll @               # bind all instance methods to this instance
-    @dashboard = new Dashboard
-    @dashboard.bind "add", @appendCell
-
+    @model.on "add",   @addCell
+    @model.on "reset", @addAllCells
+    @model.on "all",   @render
     @render()
 
   render: ->
-    $(@el).append "<p>Dashboard</p>"
+    @
 
-  appendCell: (cell) ->
-    cell_view = new CellView model: cell
-    # TODO: append cell_view.render().el to our container
+  addCell: (cell) ->
+    view = new Dashboard.CellView model: cell
+    this.$el.append view.render().el
 
-jQuery ->
-  dashboard_view = new DashboardView
+  addAllCells: ->
+    @model.each @addCell
