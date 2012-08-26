@@ -1,4 +1,4 @@
-describe "Dashboard.Frame", ->
+describe "Frame", ->
   frame = undefined
   beforeEach ->
     frame = new Dashboard.Frame()

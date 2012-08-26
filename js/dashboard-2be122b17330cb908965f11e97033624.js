@@ -95,10 +95,12 @@
 
     Cell.prototype.initialize = function() {
       var _this = this;
+      _.bindAll(this);
       this.frames = new FrameSet();
-      this.frames.on("add", this.assert_face, this);
-      return this.frames.on("add", function(frame) {
-        return _this.trigger("cell:add", frame, _this);
+      this.frames.on("add", this.assert_face);
+      return this.frames.on("all", function(event) {
+        console.log(event, arguments);
+        return _this.trigger(event);
       });
     };
 
@@ -111,7 +113,8 @@
     };
 
     Cell.prototype.add = function(frames) {
-      return this.frames.add(frames);
+      this.frames.add(frames);
+      return this.trigger("change");
     };
 
     Cell.prototype.flip = function() {
@@ -149,6 +152,11 @@
     function Grid() {
       return Grid.__super__.constructor.apply(this, arguments);
     }
+
+    Grid.prototype.defaults = {
+      columns: 3,
+      rows: 2
+    };
 
     Grid.prototype.model = Dashboard.Cell;
 
@@ -2673,7 +2681,8 @@
 
     CellView.prototype.initialize = function() {
       _.bindAll(this);
-      this.model.on('cell:add', this.addFrame);
+      this.model.on('add', this.addFrame);
+      this.model.on('reset', this.addAllFrame);
       this.model.on('all', this.render);
       return this.render();
     };
@@ -2682,9 +2691,8 @@
       return this;
     };
 
-    CellView.prototype.addFrame = function(frame, inCell) {
+    CellView.prototype.addFrame = function(frame) {
       var view;
-      console.log("CellView#addFrame", frame, arguments);
       view = new Dashboard.FrameView({
         model: frame
       });
@@ -2700,6 +2708,47 @@
     };
 
     return CellView;
+
+  })(Backbone.View);
+
+}).call(this);
+(function() {
+  var __hasProp = {}.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+  Dashboard.DashboardView = (function(_super) {
+
+    __extends(DashboardView, _super);
+
+    function DashboardView() {
+      return DashboardView.__super__.constructor.apply(this, arguments);
+    }
+
+    DashboardView.prototype.initialize = function() {
+      _.bindAll(this);
+      this.model.on("add", this.addCell);
+      this.model.on("reset", this.addAllCells);
+      this.model.on("all", this.render);
+      return this.render();
+    };
+
+    DashboardView.prototype.render = function() {
+      return this;
+    };
+
+    DashboardView.prototype.addCell = function(cell) {
+      var view;
+      view = new Dashboard.CellView({
+        model: cell
+      });
+      return this.$el.append(view.render().el);
+    };
+
+    DashboardView.prototype.addAllCells = function() {
+      return this.model.each(this.addCell);
+    };
+
+    return DashboardView;
 
   })(Backbone.View);
 
@@ -2748,47 +2797,6 @@
 
 }).call(this);
 (function() {
-  var __hasProp = {}.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-  Dashboard.GridView = (function(_super) {
-
-    __extends(GridView, _super);
-
-    function GridView() {
-      return GridView.__super__.constructor.apply(this, arguments);
-    }
-
-    GridView.prototype.initialize = function() {
-      _.bindAll(this);
-      this.model.on("add", this.addCell);
-      this.model.on("reset", this.addAllCells);
-      this.model.on("all", this.render);
-      return this.render();
-    };
-
-    GridView.prototype.render = function() {
-      return this;
-    };
-
-    GridView.prototype.addCell = function(cell) {
-      var view;
-      view = new Dashboard.CellView({
-        model: cell
-      });
-      return this.$el.append(view.render().el);
-    };
-
-    GridView.prototype.addAllCells = function() {
-      return this.model.each(this.addCell);
-    };
-
-    return GridView;
-
-  })(Backbone.View);
-
-}).call(this);
-(function() {
   var $, _ref;
 
   if ((_ref = window.Dashboard) == null) {
@@ -2805,6 +2813,9 @@
 
     Controller.prototype.render = function() {
       this.cell1 = new Dashboard.Cell();
+      this.view1 = new Dashboard.CellView({
+        model: this.cell1
+      });
       this.cell1.add(new Dashboard.Frame({
         url: "http://coffeescript.org"
       }));
@@ -2812,17 +2823,20 @@
         url: "http://backbonejs.org"
       }));
       this.cell2 = new Dashboard.Cell();
+      this.view2 = new Dashboard.CellView({
+        model: this.cell2
+      });
       this.cell2.add(new Dashboard.Frame({
         url: "http://pivotal.github.com/jasmine/"
       }));
       this.cell2.add(new Dashboard.Frame({
         url: "http://emacsformacosx.com"
       }));
-      this.grid = new Dashboard.Grid;
-      this.view = new Dashboard.GridView({
-        model: this.grid
+      this.dashboard = new Dashboard.Grid;
+      this.view = new Dashboard.DashboardView({
+        model: this.dashboard
       });
-      this.grid.add([this.cell1, this.cell2]);
+      this.dashboard.add([this.cell1, this.cell2]);
       $("[role=main]").append(this.view.render().el);
       return this;
     };

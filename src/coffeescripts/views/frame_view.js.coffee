@@ -5,17 +5,17 @@ class Dashboard.FrameView extends Backbone.View
 
   initialize: ->
     _.bindAll @
-    @model.on "change", this.render
-    @frame = $("<iframe/>")
+    @model.on "change", @render
+    @frame = $("<iframe seamless></iframe>")
     @$el.append @frame
     @render()
 
   render: ->
-    @frame.attr "src", @model.get( "url" )
+    @frame.attr "name", @model.get( "url" )
+    @frame.attr "src",  @model.get( "url" )
     @setFace()
     @
 
   setFace: ->
-    console.log "setFace front: ", @model.front()
     @$el.toggleClass "front", @model.front()
     @$el.toggleClass "back", !@model.front()

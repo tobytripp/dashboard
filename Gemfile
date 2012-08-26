@@ -1,16 +1,14 @@
 source 'https://rubygems.org'
 
-gem 'uglifier'
+gem 'rake'
 
-gem 'guard'
+gem 'guard',     '~> 1.3.2'
 gem 'guard-coffeescript'
-
-gem 'yajl-ruby'
-gem 'guard-livereload'
-
 gem 'guard-sprockets'
 gem 'guard-bundler'
 gem 'guard-shell'
 
 gem 'jasmine',   '~> 1.2.0'
+
+gem 'uglifier',  '~> 1.2.7'
 gem 'sprockets', '~> 2.4.5'

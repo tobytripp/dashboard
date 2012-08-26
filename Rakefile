@@ -1,36 +1,46 @@
 require 'rubygems'
 require 'bundler'
-require 'pathname'
-require 'logger'
-require 'fileutils'
+require 'pp'
 
 Bundler.require
+require 'rake/sprocketstask'
 
-ROOT        = Pathname( File.dirname( __FILE__ ) )
-LOGGER      = Logger.new( STDOUT )
-BUNDLES     = %w( all.css all.js )
-BUILD_DIR   = ROOT.join( "js" )
-SOURCE_DIR  = ROOT.join( "src" )
+$LOAD_PATH.unshift "src/ruby"
+require "dashboard_environment"
 
-task :compile => :cleanup do
-  sprockets = Sprockets::Environment.new( ROOT ) do |env|
-    env.logger = LOGGER
+Rake::SprocketsTask.new do |t|
+  t.environment = Dashboard.environment
+  t.output      = Dashboard::BUILD_DIR
+  t.assets      = %w( dashboard.js plugins.js )
+end
+
+file "dashboard.html" => ["dashboard.html.erb", :assets] do |t|
+  require 'erb'
+  src = t.prerequisites.first
+  template = ERB.new File.read( src )
+
+  Dashboard::LOGGER.info "Writing #{t.name}"
+  File.open( t.name, 'w' ) { |f| f.write template.result( binding ) }
+end
+
+task default: "dashboard.html"
+
+task :compile do
+  require 'sprockets'
+  environment = Dashboard.environment
+
+  full_js = environment.find_asset( 'dashboard.js' ).to_s
+
+  File.open( 'js/dashboard.js', 'w' ) do |f|
+    f.write full_js
   end
 
-  sprockets.append_path( SOURCE_DIR.join( 'javascripts' ).to_s )
-  sprockets.append_path( SOURCE_DIR.join( 'stylesheets' ).to_s )
+  require 'uglifier'
+  Dashboard::LOGGER.debug "Compressing..."
+  compressed_js = Uglifier.compile full_js
 
-  BUNDLES.each do |bundle|
-    assets = sprockets.find_asset( bundle )
-    prefix, basename = assets.pathname.to_s.split( '/' )[-2..-1]
-    FileUtils.mkpath BUILD_DIR.join( prefix )
-
-    assets.write_to( BUILD_DIR.join( prefix, basename ) )
-    assets.to_a.each do |asset|
-      # strip filename.css.foo.bar.css multiple extensions
-      realname = asset.pathname.basename.to_s.split( "." )[0..1].join( "." )
-      asset.write_to( BUILD_DIR.join( prefix, realname ) )
-    end
+  File.open( 'js/dashboard-min.js', 'w' ) do |f|
+    f.write compressed_js
   end
 end
 

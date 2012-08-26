@@ -1,5 +1,5 @@
-window.Dashboard ?= {}
 $ = undefined
+window.Dashboard ?= {}
 
 class Dashboard.Frame extends Backbone.Model
   @BACK:  0

@@ -2675,7 +2675,8 @@
       _.bindAll(this);
       this.model.on('cell:add', this.addFrame);
       this.model.on('all', this.render);
-      return this.render();
+      this.render();
+      return this.addAllFrames();
     };
 
     CellView.prototype.render = function() {
@@ -2688,7 +2689,8 @@
       view = new Dashboard.FrameView({
         model: frame
       });
-      return this.$el.append(view.render().el);
+      this.$el.append(view.render().el);
+      return console.log(this.el, view.el);
     };
 
     CellView.prototype.addAllFrames = function() {
@@ -2726,12 +2728,13 @@
     FrameView.prototype.initialize = function() {
       _.bindAll(this);
       this.model.on("change", this.render);
-      this.frame = $("<iframe/>");
+      this.frame = $("<iframe seamless></iframe>");
       this.$el.append(this.frame);
       return this.render();
     };
 
     FrameView.prototype.render = function() {
+      this.frame.attr("name", this.model.get("url"));
       this.frame.attr("src", this.model.get("url"));
       this.setFace();
       return this;

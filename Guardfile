@@ -5,17 +5,17 @@ guard 'coffeescript', output: 'src/javascripts' do
   watch %r<^src/coffeescripts/(.*)\.coffee>
 end
 
-guard 'livereload' do
-  watch %r<^spec/javascripts/.+\.js$>
-  watch %r<^src/javascripts/.+\.js$>
-end
-
 guard 'sprockets',
-  destination: "build",
+  destination: "js",
   minify:      false,
-  asset_paths: ['src/coffeescripts', 'js/libs'] do
+  asset_paths: %w[
+    src/coffeescripts
+    src/coffeescripts/models
+    src/coffeescripts/views
+    src/libs
+  ] do
   watch %r<^src/coffeescripts/.+\.js\.coffee>
-#  watch 'src/coffeescripts/dashboard.js.coffee'
+  watch "src/coffeescripts/dashboard.js.coffee"
 end
 
 guard 'bundler' do
