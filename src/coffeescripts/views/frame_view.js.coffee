@@ -12,6 +12,7 @@ class Dashboard.FrameView extends Backbone.View
 
   render: ->
     @frame.attr "name", @model.get( "url" )
+    @frame.attr "scrolling", "no"
     @frame.attr "src",  @model.get( "url" )
     @setFace()
     @

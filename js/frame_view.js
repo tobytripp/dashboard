@@ -27,6 +27,7 @@
 
     FrameView.prototype.render = function() {
       this.frame.attr("name", this.model.get("url"));
+      this.frame.attr("scrolling", "no");
       this.frame.attr("src", this.model.get("url"));
       this.setFace();
       return this;

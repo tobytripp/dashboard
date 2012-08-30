@@ -97,8 +97,8 @@
       var _this = this;
       this.frames = new FrameSet();
       this.frames.on("add", this.assert_face, this);
-      return this.frames.on("all", function(event) {
-        return console.log("Cell received from FrameSet", arguments);
+      return this.frames.on("add", function(frame) {
+        return _this.trigger("cell:add", frame, _this);
       });
     };
 
@@ -136,11 +136,25 @@
 
 }).call(this);
 (function() {
-  var $,
+  var $, Timer,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   $ = void 0;
+
+  Timer = function() {};
+
+  Timer.prototype.interval = function(ms, callback) {
+    return this.id = window.setInterval(callback, ms);
+  };
+
+  Timer.prototype.once = function(ms, callback) {
+    return this.id = window.setTimeout(callback, ms);
+  };
+
+  Timer.prototype.stop = function() {
+    return window.clearInterval(this.id);
+  };
 
   Dashboard.Grid = (function(_super) {
 
@@ -151,6 +165,27 @@
     }
 
     Grid.prototype.model = Dashboard.Cell;
+
+    Grid.prototype.initialize = function(cells, options) {
+      var _ref,
+        _this = this;
+      if (options == null) {
+        options = {};
+      }
+      this.timer = options.timer;
+      if ((_ref = this.timer) == null) {
+        this.timer = new Timer();
+      }
+      this.timer.interval(500, function() {
+        return _this.rotate();
+      });
+      return this.last_rotated_index = -1;
+    };
+
+    Grid.prototype.rotate = function() {
+      this.last_rotated_index = (this.last_rotated_index + 1) % this.length;
+      return this.at(this.last_rotated_index).flip();
+    };
 
     return Grid;
 
