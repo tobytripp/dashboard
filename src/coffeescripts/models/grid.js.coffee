@@ -16,7 +16,7 @@ class Dashboard.Grid extends Backbone.Collection
     options ?= {}
     @timer = options.timer
     @timer ?= new Timer()
-    @timer.interval 500, => @rotate()
+    @timer.interval 3000, => @rotate()
 
     @last_rotated_index = -1
 

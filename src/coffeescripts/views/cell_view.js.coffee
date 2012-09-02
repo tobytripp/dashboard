@@ -2,6 +2,7 @@ $ = jQuery
 class Dashboard.CellView extends Backbone.View
   tagname:   "div"
   className: "cell"
+  faces: ['front', 'back']
 
   initialize: ->
     _.bindAll @
@@ -11,6 +12,7 @@ class Dashboard.CellView extends Backbone.View
     @addAllFrames()
 
   render: ->
+    this.$el.toggleClass 'back', @model.get('face') > 0
     @
 
   addFrame: (frame, inCell) ->

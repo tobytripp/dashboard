@@ -121,16 +121,16 @@ body  {
 footer { clear: both; }
 
 .cell {
-   margin: 0; padding: 0;
-   width: 450px; height: 280px;
-   z-index: 1;
+   margin:   0;     padding: 0;
+   width:    450px; height: 280px;
+   z-index:  1;
+   float:    left;
+
    -webkit-transform-style: preserve-3d;
    -webkit-transition: all 1.0s linear;
-
-   float: left;
 }
 
-.cell:hover {
+.cell:hover, .cell.back {
    -webkit-transform: rotateY( 180deg );
 }
 
@@ -138,11 +138,11 @@ footer { clear: both; }
    position: absolute;
    width: 100%; height: 100%;
    -webkit-backface-visibility: hidden;
+   display: block;
+   box-sizing: border-box;
+   background-color: #AAA;
 }
 
 .frame.back {
-   display: block;
    -webkit-transform: rotateY( 180deg );
-   box-sizing: border-box;
-   background-color: #AAA;
 }

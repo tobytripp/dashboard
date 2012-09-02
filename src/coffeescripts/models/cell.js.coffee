@@ -5,6 +5,9 @@ class FrameSet extends Backbone.Collection
   model: Dashboard.Frame
 
 class Dashboard.Cell extends Backbone.Model
+  defaults:
+    face: 0
+
   initialize: ->
     #_.bindAll @
     @frames = new FrameSet()
@@ -22,7 +25,8 @@ class Dashboard.Cell extends Backbone.Model
     @frames.add frames
 
   flip: ->
-    @frames.each (frame) -> frame.flip()
+    face = @get 'face'
+    @set 'face', (face + 1) % 2
 
   assert_face: ->
     front_frame = @frames.find (frame) -> frame.front()

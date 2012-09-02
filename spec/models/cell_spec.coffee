@@ -16,11 +16,6 @@ describe "Cell", ->
     expect( cell.at( 0 ).front() ).toBeTruthy()
 
   describe "#flip", ->
-    it "calls #flip on the first two frames", ->
-      spyOn( frame1, "flip" )
-      spyOn( frame2, "flip" )
-
+    it "reverses its face attribute", ->
       cell.flip()
-
-      expect( frame1.flip ).toHaveBeenCalled()
-      expect( frame2.flip ).toHaveBeenCalled()
+      expect( cell.get( "face" ) ).toEqual 1
