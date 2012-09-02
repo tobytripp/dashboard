@@ -9,7 +9,6 @@ class Dashboard.Cell extends Backbone.Model
     face: 0
 
   initialize: ->
-    #_.bindAll @
     @frames = new FrameSet()
     @frames.on "add", @assert_face, @
     @frames.on "add",

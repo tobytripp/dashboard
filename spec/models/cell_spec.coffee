@@ -1,12 +1,12 @@
 describe "Cell", ->
-  cell          = undefined
+  cell   = undefined
   frame1 = undefined
   frame2 = undefined
 
   beforeEach ->
     frame1 = new Dashboard.Frame()
     frame2 = new Dashboard.Frame()
-    cell = new Dashboard.Cell
+    cell   = new Dashboard.Cell
     cell.add [frame1, frame2]
 
   it "should be a collection of Frame models", ->
