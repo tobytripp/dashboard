@@ -43,5 +43,6 @@ build/buildinfo.properties
 build/config/buildinfo.properties
 
 # Intermediate builds of coffeescript files
+/js/**/*.js
 src/javascripts
 spec/**/*.js

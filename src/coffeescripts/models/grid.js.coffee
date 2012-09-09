@@ -2,7 +2,7 @@
 #= require timer
 $ = undefined
 
-class Dashboard.GridRow extends Backbone.Collection
+class Dashboard.Grid extends Backbone.Collection
   model: Dashboard.Cell
 
   initialize: (cells, options) ->

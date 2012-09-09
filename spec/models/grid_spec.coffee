@@ -1,4 +1,4 @@
-describe "GridRow", ->
+describe "Grid", ->
   class FakeCell extends Backbone.Model
     flip: ->
       @
@@ -20,7 +20,7 @@ describe "GridRow", ->
     cell2 = new FakeCell()
     spyOn( cell2, "flip" )
 
-    grid  = new Dashboard.GridRow( [cell1, cell2], { timer: timer } )
+    grid  = new Dashboard.Grid( [cell1, cell2], { timer: timer } )
 
   it "sets a callback on the given timer", ->
     expect( timer.callback ).toBeTruthy()
