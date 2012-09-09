@@ -1,4 +1,6 @@
 class Dashboard.GridView extends Backbone.View
+  className: "grid"
+  
   initialize: ->
     _.bindAll @               # bind all instance methods to this instance
     @model.on "add",   @addCell

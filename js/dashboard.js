@@ -93,6 +93,10 @@
       return Cell.__super__.constructor.apply(this, arguments);
     }
 
+    Cell.prototype.defaults = {
+      face: 0
+    };
+
     Cell.prototype.initialize = function() {
       var _this = this;
       this.frames = new FrameSet();
@@ -115,9 +119,9 @@
     };
 
     Cell.prototype.flip = function() {
-      return this.frames.each(function(frame) {
-        return frame.flip();
-      });
+      var face;
+      face = this.get('face');
+      return this.set('face', (face + 1) % 2);
     };
 
     Cell.prototype.assert_face = function() {
@@ -130,17 +134,35 @@
       }
     };
 
+    Cell.prototype.backFacing = function() {
+      return this.get("face") > 0;
+    };
+
     return Cell;
 
   })(Backbone.Model);
 
 }).call(this);
 (function() {
-  var $,
+  var $, Timer,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   $ = void 0;
+
+  Timer = function() {};
+
+  Timer.prototype.interval = function(ms, callback) {
+    return this.id = window.setInterval(callback, ms);
+  };
+
+  Timer.prototype.once = function(ms, callback) {
+    return this.id = window.setTimeout(callback, ms);
+  };
+
+  Timer.prototype.stop = function() {
+    return window.clearInterval(this.id);
+  };
 
   Dashboard.Grid = (function(_super) {
 
@@ -151,6 +173,59 @@
     }
 
     Grid.prototype.model = Dashboard.Cell;
+
+    Grid.prototype.initialize = function(cells, options) {
+      var _ref,
+        _this = this;
+      if (options == null) {
+        options = {};
+      }
+      this.timer = options.timer;
+      if ((_ref = this.timer) == null) {
+        this.timer = new Timer();
+      }
+      this.timer.interval(3000, function() {
+        return _this.rotate();
+      });
+      this.last_rotated_index = -1;
+      this.row_count = 2;
+      return this.column_count = 3;
+    };
+
+    Grid.prototype.rotate = function() {
+      this.last_rotated_index = (this.last_rotated_index + 1) % this.length;
+      return this.at(this.last_rotated_index).flip();
+    };
+
+    Grid.prototype.columnWidth = function() {
+      return 100.0 / this.columns();
+    };
+
+    Grid.prototype.rowHeight = function() {
+      return 100.0 / this.rows();
+    };
+
+    Grid.prototype.rows = function(n) {
+      var _this = this;
+      if (n != null) {
+        this.row_count = n;
+        this.each(function(cell) {
+          return cell.set("height", _this.rowHeight());
+        });
+      }
+      return this.row_count;
+    };
+
+    Grid.prototype.columns = function(n) {
+      var _this = this;
+      if (n != null) {
+        this.column_count = n;
+        this.each(function(cell) {
+          return cell.set("width", _this.columnWidth());
+        });
+      }
+      return this.column_count;
+    };
 
     return Grid;
 
@@ -2675,10 +2750,12 @@
       _.bindAll(this);
       this.model.on('cell:add', this.addFrame);
       this.model.on('all', this.render);
-      return this.render();
+      this.render();
+      return this.addAllFrames();
     };
 
     CellView.prototype.render = function() {
+      this.$el.toggleClass('back', this.model.backFacing());
       return this;
     };
 
@@ -2688,7 +2765,8 @@
       view = new Dashboard.FrameView({
         model: frame
       });
-      return this.$el.append(view.render().el);
+      this.$el.append(view.render().el);
+      return console.log(this.el, view.el);
     };
 
     CellView.prototype.addAllFrames = function() {
@@ -2726,12 +2804,14 @@
     FrameView.prototype.initialize = function() {
       _.bindAll(this);
       this.model.on("change", this.render);
-      this.frame = $("<iframe/>");
+      this.frame = $("<iframe seamless></iframe>");
       this.$el.append(this.frame);
       return this.render();
     };
 
     FrameView.prototype.render = function() {
+      this.frame.attr("name", this.model.get("url"));
+      this.frame.attr("scrolling", "no");
       this.frame.attr("src", this.model.get("url"));
       this.setFace();
       return this;
@@ -2758,6 +2838,8 @@
     function GridView() {
       return GridView.__super__.constructor.apply(this, arguments);
     }
+
+    GridView.prototype.className = "grid";
 
     GridView.prototype.initialize = function() {
       _.bindAll(this);
@@ -2804,25 +2886,54 @@
     }
 
     Controller.prototype.render = function() {
+      this.cell0 = new Dashboard.Cell();
+      this.cell0.add(new Dashboard.Frame({
+        url: "frames/1.html"
+      }));
+      this.cell0.add(new Dashboard.Frame({
+        url: "frames/2.html"
+      }));
       this.cell1 = new Dashboard.Cell();
       this.cell1.add(new Dashboard.Frame({
-        url: "http://coffeescript.org"
+        url: "frames/3.html"
       }));
       this.cell1.add(new Dashboard.Frame({
-        url: "http://backbonejs.org"
+        url: "frames/4.html"
       }));
       this.cell2 = new Dashboard.Cell();
       this.cell2.add(new Dashboard.Frame({
-        url: "http://pivotal.github.com/jasmine/"
+        url: "frames/5.html"
       }));
       this.cell2.add(new Dashboard.Frame({
-        url: "http://emacsformacosx.com"
+        url: "frames/6.html"
+      }));
+      this.cell3 = new Dashboard.Cell();
+      this.cell3.add(new Dashboard.Frame({
+        url: "frames/1.html"
+      }));
+      this.cell3.add(new Dashboard.Frame({
+        url: "frames/2.html"
+      }));
+      this.cell4 = new Dashboard.Cell();
+      this.cell4.add(new Dashboard.Frame({
+        url: "frames/3.html"
+      }));
+      this.cell4.add(new Dashboard.Frame({
+        url: "frames/4.html"
+      }));
+      this.cell5 = new Dashboard.Cell();
+      this.cell5.add(new Dashboard.Frame({
+        url: "frames/5.html"
+      }));
+      this.cell5.add(new Dashboard.Frame({
+        url: "frames/6.html"
       }));
       this.grid = new Dashboard.Grid;
       this.view = new Dashboard.GridView({
         model: this.grid
       });
-      this.grid.add([this.cell1, this.cell2]);
+      this.grid.add([this.cell0, this.cell1, this.cell2, this.cell3, this.cell4, this.cell5]);
+      this.grid.columns(3);
       $("[role=main]").append(this.view.render().el);
       return this;
     };

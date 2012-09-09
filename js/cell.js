@@ -93,6 +93,10 @@
       return Cell.__super__.constructor.apply(this, arguments);
     }
 
+    Cell.prototype.defaults = {
+      face: 0
+    };
+
     Cell.prototype.initialize = function() {
       var _this = this;
       this.frames = new FrameSet();
@@ -115,9 +119,9 @@
     };
 
     Cell.prototype.flip = function() {
-      return this.frames.each(function(frame) {
-        return frame.flip();
-      });
+      var face;
+      face = this.get('face');
+      return this.set('face', (face + 1) % 2);
     };
 
     Cell.prototype.assert_face = function() {
@@ -128,6 +132,10 @@
       if (!front_frame) {
         return this.frames.at(0).flip();
       }
+    };
+
+    Cell.prototype.backFacing = function() {
+      return this.get("face") > 0;
     };
 
     return Cell;

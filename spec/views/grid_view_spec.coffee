@@ -8,6 +8,7 @@ describe "GridView", ->
     dashboard =
       cells: [cell]
       each: (callback) -> _.each( this.cells, callback )
+      columns: (n) -> n
     _.extend dashboard, Backbone.Events
 
     view = new Dashboard.GridView model: dashboard
@@ -22,3 +23,10 @@ describe "GridView", ->
       view.addAllCells()
 
       expect( Dashboard.CellView ).toHaveBeenCalledWith( model: cell )
+
+  it "renders each row in its own container", ->
+    spyOn( dashboard, "columns" ).andReturn 2
+
+    view.addAllCells()
+
+    

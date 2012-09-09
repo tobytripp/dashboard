@@ -26,6 +26,7 @@
     };
 
     CellView.prototype.render = function() {
+      this.$el.toggleClass('back', this.model.backFacing());
       return this;
     };
 

@@ -10,6 +10,8 @@
       return GridView.__super__.constructor.apply(this, arguments);
     }
 
+    GridView.prototype.className = "grid";
+
     GridView.prototype.initialize = function() {
       _.bindAll(this);
       this.model.on("add", this.addCell);

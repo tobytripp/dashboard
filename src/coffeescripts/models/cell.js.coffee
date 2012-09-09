@@ -30,3 +30,7 @@ class Dashboard.Cell extends Backbone.Model
   assert_face: ->
     front_frame = @frames.find (frame) -> frame.front()
     @frames.at(0).flip() unless front_frame
+
+  backFacing: () ->
+    @get( "face" ) > 0
+    
