@@ -1,4 +1,4 @@
-describe "GridView", ->
+describe "GridRowView", ->
   view      = undefined
   dashboard = undefined
   cell      = undefined
@@ -11,7 +11,7 @@ describe "GridView", ->
       columns: (n) -> n
     _.extend dashboard, Backbone.Events
 
-    view = new Dashboard.GridView model: dashboard
+    view = new Dashboard.GridRowView model: dashboard
 
   describe "#addAllCells", ->
     it "creates a CellView for every Cell in the Dashboard", ->

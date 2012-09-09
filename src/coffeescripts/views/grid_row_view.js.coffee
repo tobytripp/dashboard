@@ -1,4 +1,4 @@
-class Dashboard.GridView extends Backbone.View
+class Dashboard.GridRowView extends Backbone.View
   className: "grid"
   
   initialize: ->
