@@ -107,7 +107,7 @@ iframe {
 }
 
 div[role=main] {
-   margin:   0; padding:  0;
+   margin: 0; padding:  0;
    display: table; table-layout: fixed;
    width: 100%;
 }
@@ -119,7 +119,7 @@ body  {
 
 footer { clear: both; }
 
-.grid { 
+.row {
    display: table-row;
    width: 100%;
 }

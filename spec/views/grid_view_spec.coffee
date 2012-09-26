@@ -6,14 +6,19 @@ describe "GridView", ->
   beforeEach ->
     cell = {}
     dashboard =
-      cells: [cell]
+      cells: [cell, {}, {}, {}]
       each: (callback) -> _.each( this.cells, callback )
-      columns: (n) -> n
     _.extend dashboard, Backbone.Events
 
-    view = new Dashboard.GridView model: dashboard
+
+  it "accepts a columns option", ->
+    v = new Dashboard.GridView model: dashboard, columns: 7
+    expect( v.columns ).toEqual 7
 
   describe "#addAllCells", ->
+    beforeEach ->
+      view = new Dashboard.GridView model: dashboard
+
     it "creates a CellView for every Cell in the Dashboard", ->
       cell_view = jasmine.createSpyObj "CellView", ["render"]
       cell_view.render.andReturn cell_view
@@ -24,9 +29,9 @@ describe "GridView", ->
 
       expect( Dashboard.CellView ).toHaveBeenCalledWith( model: cell )
 
-  it "renders each row in its own container", ->
-    spyOn( dashboard, "columns" ).andReturn 2
+  describe "when the cell count exceeds the column setting", ->
+    beforeEach ->
+      view = new Dashboard.GridView model: dashboard, columns: 3
 
-    view.addAllCells()
-
-    
+    it "creates a second row for the excess", ->
+      expect( view.$el.children().length ).toEqual 2

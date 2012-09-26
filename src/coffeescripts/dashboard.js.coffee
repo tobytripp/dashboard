@@ -31,10 +31,9 @@ class Dashboard.Controller
     @cell5.add new Dashboard.Frame( url: "frames/6.html" )
 
     @grid = new Dashboard.Grid
-    @view = new Dashboard.GridView model: @grid
+    @view = new Dashboard.GridView model: @grid, columns: 3
 
     @grid.add [@cell0, @cell1, @cell2, @cell3, @cell4, @cell5]
-    @grid.columns 3
 
     $("[role=main]").append @view.render().el
     @
