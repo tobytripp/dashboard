@@ -13,7 +13,7 @@ class Dashboard.CellView extends Backbone.View
   render: ->
     this.$el.toggleClass 'back', @model.backFacing()
     # this.$el.height @model.get( "height" ) + "%"
-    # this.$el.width  @model.get( "width" )  + "%"
+    this.$el.width  @model.get( "width" )  + "%"
     @
 
   addFrame: (frame, inCell) ->

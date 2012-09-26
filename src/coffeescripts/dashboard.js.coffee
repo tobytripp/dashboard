@@ -34,6 +34,7 @@ class Dashboard.Controller
     @view = new Dashboard.GridView model: @grid, columns: 3
 
     @grid.add [@cell0, @cell1, @cell2, @cell3, @cell4, @cell5]
+    @grid.columns 3
 
     $("[role=main]").append @view.render().el
     @
