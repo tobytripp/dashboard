@@ -39,5 +39,4 @@ describe "GridView", ->
       view.render()
 
     it "creates a second row for the excess", ->
-      console.log view.$el
-      expect( view.$el.children().length ).toEqual 2
+      expect( view.$el.find(".row").length ).toEqual 2

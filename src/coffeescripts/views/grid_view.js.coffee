@@ -1,7 +1,8 @@
 class Dashboard.GridView extends Backbone.View
+  tagName:   "table"
   className: "grid"
   rowTemplate: _.template """
-    <div class=\"row\"></div>
+    <tr class=\"row\"></tr>
     """
 
   initialize: (options) ->

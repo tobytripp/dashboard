@@ -21,7 +21,7 @@
     <ul>
       <li><a href="frames/1.html">1</a></li>
       <li><a href="frames/2.html">2</a></li>
-      <li><a href="frames/3.html">3</a></li>
+      <li><a href="http://www.transitchicago.com/mobile/traintrackerarrivals.aspx?sid=41460">3</a></li>
       <li><a href="frames/4.html">4</a></li>
       <li><a href="frames/5.html">5</a></li>
       <li><a href="frames/6.html">6</a></li>
@@ -34,31 +34,7 @@
     </ul>
   </div>
 
-  <footer>
-    <form>
-      <label>
-        Columns:
-        <select name=columns>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3" selected>3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-        </select>
-      </label>
-      <label>
-        Rows:
-        <select name=rows>
-          <option value="1">1</option>
-          <option value="2" selected>2</option>
-          <option value="3">3</option>
-        </select>
-      </label>
-
-      <input type=submit value=Update></input>
-    </form>
-  </footer>
+  <footer></footer>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js">
   </script>
@@ -68,7 +44,7 @@
   </script>
 
   <script src="<%= Dashboard.plugin_path %>"></script>
-  <script src="<%= Dashboard.main_path %>"></script>
+  <script src="<%= Dashboard.main_path   %>"></script>
 
   <script type="text/javascript" defer="defer">
     var dashboard = new Dashboard.Controller( $("div[role=main]"), {}).render();

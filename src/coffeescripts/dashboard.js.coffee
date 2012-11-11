@@ -10,21 +10,9 @@ class Dashboard.Controller
       if i % 2 == 0
         @cells.push new Dashboard.Cell()
       _(@cells).last().addUrl $(el).attr( "href" )
+    @el.empty()
 
   render: ->
-    @cells = _.map [
-        ["frames/1.html", "frames/2.html"],
-        ["frames/3.html", "frames/4.html"],
-        ["frames/5.html", "frames/6.html"],
-        ["frames/1.html", "frames/2.html"],
-        ["frames/3.html", "frames/4.html"],
-        ["frames/5.html", "frames/6.html"],
-      ], (hrefs) ->
-        cell = new Dashboard.Cell()
-        cell.add new Dashboard.Frame( url: hrefs[0] )
-        cell.add new Dashboard.Frame( url: hrefs[1] )
-        cell
-
     @grid = new Dashboard.Grid
     @view = new Dashboard.GridView model: @grid, columns: 3
 

@@ -103,32 +103,36 @@ td { vertical-align: top; }
 }
 
 iframe {
-   border: none; width: 100%;
+   border: none; width: 100%; min-height: 100%;
 }
 
 div[role=main] {
    margin: 0; padding:  0;
-   display: table; table-layout: fixed;
-   width: 100%;
+   background-color: #F00;
+}
+
+.grid {
+   background-color: #2F4F4F;
+   height: 100%; width: 100%;
 }
 
 body  {
    background-color: #211E1E;
-   color: white;
+   color:  white;
+}
+
+html, body, div {
+   height: 100%; width: 100%;
+   margin: 0; padding: 0;
 }
 
 footer { clear: both; }
 
-.row {
-   display: table-row;
-   width: 100%;
-}
+.row {}
 
 .cell {
    margin:   0;     padding: 0;
    z-index:  1;
-   display: table-cell;
-   width: 100%;
 
    -webkit-transform-style: preserve-3d;
    -webkit-transition: all 1.0s linear;

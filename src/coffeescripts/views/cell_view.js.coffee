@@ -1,6 +1,6 @@
 $ = jQuery
 class Dashboard.CellView extends Backbone.View
-  tagname:   "div"
+  tagName:   "td"
   className: "cell"
 
   initialize: ->
