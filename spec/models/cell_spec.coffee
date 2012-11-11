@@ -19,3 +19,10 @@ describe "Cell", ->
     it "reverses its face attribute", ->
       cell.flip()
       expect( cell.get( "face" ) ).toEqual 1
+
+  describe "#addUrl", ->
+    it "constructs a Frame for the given url", ->
+      spyOn Dashboard, "Frame"
+      cell.addUrl "foo.html"
+
+      expect( Dashboard.Frame ).toHaveBeenCalledWith url: "foo.html"

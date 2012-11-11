@@ -1,18 +1,21 @@
 #= require frame
 $ = undefined
 
-class FrameSet extends Backbone.Collection
-  model: Dashboard.Frame
-
 class Dashboard.Cell extends Backbone.Model
+  class FrameSet extends Backbone.Collection
+    model: Dashboard.Frame
+
   defaults:
     face: 0
 
-  initialize: ->
+  initialize: (attributes, options) ->
     @frames = new FrameSet()
     @frames.on "add", @assert_face, @
     @frames.on "add",
       (frame) => @trigger "cell:add", frame, @
+
+  addUrl: (url) ->
+    @add new Dashboard.Frame( url: url )
 
   at: (index) ->
     @frames.at index
@@ -33,4 +36,3 @@ class Dashboard.Cell extends Backbone.Model
 
   backFacing: () ->
     @get( "face" ) > 0
-    

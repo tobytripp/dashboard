@@ -17,7 +17,22 @@
   <header>
   </header>
 
-  <div role="main"></div>
+  <div role="main">
+    <ul>
+      <li><a href="frames/1.html">1</a></li>
+      <li><a href="frames/2.html">2</a></li>
+      <li><a href="frames/3.html">3</a></li>
+      <li><a href="frames/4.html">4</a></li>
+      <li><a href="frames/5.html">5</a></li>
+      <li><a href="frames/6.html">6</a></li>
+      <li><a href="frames/1.html">1</a></li>
+      <li><a href="frames/2.html">2</a></li>
+      <li><a href="frames/3.html">3</a></li>
+      <li><a href="frames/4.html">4</a></li>
+      <li><a href="frames/5.html">5</a></li>
+      <li><a href="frames/6.html">6</a></li>
+    </ul>
+  </div>
 
   <footer>
     <form>
@@ -56,7 +71,7 @@
   <script src="<%= Dashboard.main_path %>"></script>
 
   <script type="text/javascript" defer="defer">
-    var dashboard = new Dashboard.Controller({}).render();
+    var dashboard = new Dashboard.Controller( $("div[role=main]"), {}).render();
   </script>
 </body>
 </html>

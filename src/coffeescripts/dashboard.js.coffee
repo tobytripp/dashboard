@@ -3,38 +3,34 @@ window.Dashboard ?= {}
 
 $ = window.jQuery
 class Dashboard.Controller
-  constructor: (@options) ->
+  constructor: (el, @options) ->
+    @el = $ el
+    @cells = []
+    @el.find( "[href]" ).each (i, el) =>
+      if i % 2 == 0
+        @cells.push new Dashboard.Cell()
+      _(@cells).last().addUrl $(el).attr( "href" )
 
   render: ->
-    @cell0 = new Dashboard.Cell()
-    @cell0.add new Dashboard.Frame( url: "frames/1.html" )
-    @cell0.add new Dashboard.Frame( url: "frames/2.html" )
-
-    @cell1 = new Dashboard.Cell()
-    @cell1.add new Dashboard.Frame( url: "frames/3.html" )
-    @cell1.add new Dashboard.Frame( url: "frames/4.html" )
-
-    @cell2 = new Dashboard.Cell()
-    @cell2.add new Dashboard.Frame( url: "frames/5.html" )
-    @cell2.add new Dashboard.Frame( url: "frames/6.html" )
-
-    @cell3 = new Dashboard.Cell()
-    @cell3.add new Dashboard.Frame( url: "frames/1.html" )
-    @cell3.add new Dashboard.Frame( url: "frames/2.html" )
-
-    @cell4 = new Dashboard.Cell()
-    @cell4.add new Dashboard.Frame( url: "frames/3.html" )
-    @cell4.add new Dashboard.Frame( url: "frames/4.html" )
-
-    @cell5 = new Dashboard.Cell()
-    @cell5.add new Dashboard.Frame( url: "frames/5.html" )
-    @cell5.add new Dashboard.Frame( url: "frames/6.html" )
+    @cells = _.map [
+        ["frames/1.html", "frames/2.html"],
+        ["frames/3.html", "frames/4.html"],
+        ["frames/5.html", "frames/6.html"],
+        ["frames/1.html", "frames/2.html"],
+        ["frames/3.html", "frames/4.html"],
+        ["frames/5.html", "frames/6.html"],
+      ], (hrefs) ->
+        cell = new Dashboard.Cell()
+        cell.add new Dashboard.Frame( url: hrefs[0] )
+        cell.add new Dashboard.Frame( url: hrefs[1] )
+        cell
 
     @grid = new Dashboard.Grid
     @view = new Dashboard.GridView model: @grid, columns: 3
 
-    @grid.add [@cell0, @cell1, @cell2, @cell3, @cell4, @cell5]
+    @grid.add @cells
     @grid.columns 3
+    @grid.rows 2
 
     $("[role=main]").append @view.render().el
     @
