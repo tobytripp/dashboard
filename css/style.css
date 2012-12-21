@@ -138,7 +138,7 @@ footer { clear: both; }
    -webkit-transition: all 1.0s linear;
 }
 
-.cell:hover, .cell.back {
+.cell.back {
    -webkit-transform: rotateY( 180deg );
 }
 

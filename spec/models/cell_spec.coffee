@@ -20,6 +20,14 @@ describe "Cell", ->
       cell.flip()
       expect( cell.get( "face" ) ).toEqual 1
 
+  describe "#pause", ->
+    it "turns #flip into a noop", ->
+      cell.pause()
+      cell.flip()
+      expect( cell.get( "face" ) ).toEqual 0
+
+  describe "#resume", ->
+
   describe "#addUrl", ->
     it "constructs a Frame for the given url", ->
       spyOn Dashboard, "Frame"

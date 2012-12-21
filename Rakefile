@@ -25,25 +25,6 @@ end
 
 task default: "dashboard.html"
 
-task :compile do
-  require 'sprockets'
-  environment = Dashboard.environment
-
-  full_js = environment.find_asset( 'dashboard.js' ).to_s
-
-  File.open( 'js/dashboard.js', 'w' ) do |f|
-    f.write full_js
-  end
-
-  require 'uglifier'
-  Dashboard::LOGGER.debug "Compressing..."
-  compressed_js = Uglifier.compile full_js
-
-  File.open( 'js/dashboard-min.js', 'w' ) do |f|
-    f.write compressed_js
-  end
-end
-
 begin
   require 'jasmine'
   load 'jasmine/tasks/jasmine.rake'

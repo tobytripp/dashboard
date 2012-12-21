@@ -4,6 +4,7 @@ $ = undefined
 
 class Dashboard.Grid extends Backbone.Collection
   model: Dashboard.Cell
+  # localStorage: new Backbone.LocalStorage( "Grid" )
 
   initialize: (cells, options) ->
     options ?= {}

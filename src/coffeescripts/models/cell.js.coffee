@@ -2,6 +2,10 @@
 $ = undefined
 
 class Dashboard.Cell extends Backbone.Model
+  this.FRONT = 0
+  this.BACK  = 1
+  this.FACES = [this.FRONT, this.BACK]
+
   class FrameSet extends Backbone.Collection
     model: Dashboard.Frame
 
@@ -26,7 +30,11 @@ class Dashboard.Cell extends Backbone.Model
   add: (frames) ->
     @frames.add frames
 
+  pause: ->
+    @paused = true
+
   flip: ->
+    return if @paused
     face = @get 'face'
     @set 'face', (face + 1) % 2
 
@@ -35,4 +43,4 @@ class Dashboard.Cell extends Backbone.Model
     @frames.at(0).flip() unless front_frame
 
   backFacing: () ->
-    @get( "face" ) > 0
+    @get( "face" ) != Dashboard.Cell.FRONT
